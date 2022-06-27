@@ -56,6 +56,10 @@ public class Deck implements Iterable<Card>{
         return remaining;
     }
 
+    public int getDeckSize() {
+        return size;
+    }
+
     @Override
     public Iterator<Card> iterator() {
         return Collections.unmodifiableCollection(cards).iterator();
