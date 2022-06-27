@@ -1,4 +1,13 @@
 package com.sde_uno.unocardgame.model;
 
-public class Deck {
+import java.util.Iterator;
+
+public class Deck implements Iterable<Card>{
+
+
+
+    @Override
+    public Iterator<Card> iterator() {
+        return null;
+    }
 }
