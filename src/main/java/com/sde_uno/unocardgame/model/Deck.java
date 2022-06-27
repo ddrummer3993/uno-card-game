@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public class Deck implements Iterable<Card>{
 
-
+    public int test;
 
     @Override
     public Iterator<Card> iterator() {
