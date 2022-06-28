@@ -1,5 +1,6 @@
 package com.sde_uno.unocardgame;
 
+import com.sde_uno.unocardgame.controller.GameModerator;
 import com.sde_uno.unocardgame.model.Card;
 import com.sde_uno.unocardgame.model.Deck;
 
@@ -19,6 +20,12 @@ public class PlayUno {
         final List<String> discardPile = new ArrayList<>();
         final List<String> playerHand = new ArrayList<>();
         final List<String> computerHand = new ArrayList<>();
+
+        //State Variables
+        String playableColorState;
+        String playableSymbolState;
+
+
 
 
         //Actual Program - Play Uno
@@ -49,14 +56,13 @@ public class PlayUno {
 
 
         //TODO flip top card of draw pile and create discard pile.
-
-
-
         //TODO assign top card in discard to playable game state.
+        unoGame.startGame(deck);
         //TODO assign "dealer" status to one player, other player has first turn.
         //TODO TEST ABOVE CODE. should have 4 lists w/ appropriate numbers of cards.
 
         //TODO determine first player, begin turn.
+        GameModerator moderator = new GameModerator();
         //TODO prompt player to play card or draw.
         //TODO If playing a card, check to make sure card is playable
         //TODO if playable, check for additional action and implement.
@@ -88,6 +94,10 @@ public class PlayUno {
         System.out.println(deck.getDeckSize());
         System.out.println("PLAYER HAND: " + playerHand);
         System.out.println("COMP HAND: " + computerHand);
+    }
+
+    public void startGame(Deck deck) {
+
     }
 
 }
