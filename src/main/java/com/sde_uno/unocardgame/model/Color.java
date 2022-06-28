@@ -7,12 +7,14 @@ public enum Color {
     BLUE("B"),
     YELLOW("Y");
 
+
     private final String colorSymbol;
 
-    Color(String colorSymbol){
-        this.colorSymbol= colorSymbol;
+    Color(String colorSymbol) {
+        this.colorSymbol = colorSymbol;
     }
-    public String getColorSymbol(){
+
+    public String getColorSymbol() {
         return colorSymbol;
     }
 }

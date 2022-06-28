@@ -15,13 +15,13 @@ public enum Symbol {
     NINE("9"),
     DRAWTWO("D2"),
     SKIP("S"),
-    WILD("W"){
+    WILD("W") {
         @Override
         public boolean needsColor() {
             return false;
         }
     },
-    WILDDRAWFOUR("WD4"){
+    WILDDRAWFOUR("WD4") {
         @Override
         public boolean needsColor() {
             return false;
@@ -29,10 +29,9 @@ public enum Symbol {
     };
 
 
-
     private final String abbreviation;
 
-    Symbol(String abbreviation){
+    Symbol(String abbreviation) {
         this.abbreviation = abbreviation;
     }
 
