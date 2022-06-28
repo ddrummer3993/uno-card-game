@@ -17,10 +17,6 @@ public class PlayUno {
 
     public static void main(String[] args) {
 
-        final List<String> discardPile = new ArrayList<>();
-        final List<String> playerHand = new ArrayList<>();
-        final List<String> computerHand = new ArrayList<>();
-
         //State Variables
         String playableColorState;
         String playableSymbolState;
