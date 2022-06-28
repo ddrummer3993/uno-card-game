@@ -55,12 +55,15 @@ public class Deck implements Iterable<Card>{
     //TODO create sort method
     public Card draw() {
         try {
-            Card card = iterator.next();
-            remaining--;
+            Card card = cards.get(0);
             return card;
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException("Deck is empty!");
         }
+    }
+
+    public Card removeCard() {
+        return cards.remove(0);
     }
 
     public int getRemaining() {

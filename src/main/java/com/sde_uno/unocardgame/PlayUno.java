@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 public class PlayUno {
 
+    final List<String> discardPile = new ArrayList<>();
+    final static List<String> playerHand = new ArrayList<>();
+    final static List<String> computerHand = new ArrayList<>();
+
     public static void main(String[] args) {
 
         final List<String> discardPile = new ArrayList<>();
@@ -17,41 +21,38 @@ public class PlayUno {
         final List<String> computerHand = new ArrayList<>();
 
 
-
-        //TEST TEST TEST
-        Deck deck = new Deck();
-        System.out.println(deck);
-        deck.shuffle();
-        Card myCard = deck.draw();
-        System.out.println(deck.getDeckSize());
-        System.out.println(deck);
-        System.out.println(myCard);
-
-
         //Actual Program - Play Uno
 
+        PlayUno unoGame = new PlayUno();
+
         //TODO create testing file and begin to create test methods.
-        //TODO call instance of Deck, ensure our deck has 100 cards, and shuffle Deck.
 
-        Deck unoDeck = new Deck();
+        //Create Deck
+        Deck deck = new Deck();
+        System.out.println("The New Deck of Uno Cards: " + deck);
 
-        if (unoDeck.getDeckSize() != 100) {
+        //Ensure Deck has 100 cards
+        if (deck.getDeckSize() != 100) {
             System.out.println("Incomplete deck of cards");
         } else {
             System.out.println("The deck has complete number of cards");
         }
-        unoDeck.shuffle();
+
+        //Shuffle the Deck.
+        deck.shuffle();
+        System.out.println("SHUFFLED: " + deck);
 
 
 
-        //TODO deal each player 7 cards (alternating).
+        //Deal 7 cards to each player, alternating as you deal.
+        unoGame.deal(deck);
 
 
         //TODO flip top card of draw pile and create discard pile.
 
 
 
-    //TODO assign top card in discard to playable game state.
+        //TODO assign top card in discard to playable game state.
         //TODO assign "dealer" status to one player, other player has first turn.
         //TODO TEST ABOVE CODE. should have 4 lists w/ appropriate numbers of cards.
 
@@ -67,6 +68,26 @@ public class PlayUno {
 
         //TODO implement player to play last remaining card in hand wins
         //TODO prompt player to play again.
+
+    }
+
+    public static void deal(Deck deck) {
+        int hand = 1;
+        for (int i = 1; i < 15; i++) {
+            Card drawnCard = deck.draw();
+            deck.removeCard();
+            if (hand == 1) {
+                playerHand.add(String.valueOf(drawnCard));
+                hand = 2;
+            } else {
+                computerHand.add(String.valueOf(drawnCard));
+                hand = 1;
+            }
+        }
+        System.out.println("DECK: " + deck);
+        System.out.println(deck.getDeckSize());
+        System.out.println("PLAYER HAND: " + playerHand);
+        System.out.println("COMP HAND: " + computerHand);
     }
 
 }
