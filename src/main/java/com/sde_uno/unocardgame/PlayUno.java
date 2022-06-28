@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class PlayUno {
 
-    final List<String> discardPile = new ArrayList<>();
+    final static List<String> discardPile = new ArrayList<>();
     final static List<String> playerHand = new ArrayList<>();
     final static List<String> computerHand = new ArrayList<>();
 
@@ -33,7 +33,8 @@ public class PlayUno {
 
         //Ensure Deck has 100 cards
         if (deck.getDeckSize() != 100) {
-            System.out.println("Incomplete deck of cards");
+            throw new IllegalArgumentException("Incomplete deck of cards");
+
         } else {
             System.out.println("The deck has complete number of cards");
         }
@@ -47,8 +48,12 @@ public class PlayUno {
         //Deal 7 cards to each player, alternating as you deal.
         unoGame.deal(deck);
 
+        flipFirstCard(deck);
 
-        //TODO flip top card of draw pile and create discard pile.
+        checkDiscardPile();
+
+
+        // flip top card of draw pile and create discard pile.
 
 
 
@@ -88,6 +93,17 @@ public class PlayUno {
         System.out.println(deck.getDeckSize());
         System.out.println("PLAYER HAND: " + playerHand);
         System.out.println("COMP HAND: " + computerHand);
+    }
+
+    public static void flipFirstCard(Deck deck) {
+        Card firstCard = deck.draw();
+        deck.removeCard();
+        discardPile.add(String.valueOf(firstCard));
+        System.out.println("First flipped card : " + firstCard);
+    }
+
+    public static void checkDiscardPile() {
+        System.out.println("Discard pile: " + discardPile);
     }
 
 }
