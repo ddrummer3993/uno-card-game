@@ -4,4 +4,9 @@ public class GameModerator {
 
 
 
+    public void play() {
+        int randNum = (Math.random() <= 0.5) ? 1 : 2;
+
+    }
+
 }
