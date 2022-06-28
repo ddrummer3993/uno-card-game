@@ -2,9 +2,14 @@ package com.sde_uno.unocardgame.model;
 import java.util.Objects;
 public class Card {
     //Fields
-    private final Symbol symbol;
-    private final Color color;
+    private Symbol symbol;
+    private Color color;
 
+
+
+    public Card(Symbol symbol) {
+        this.symbol = symbol;
+    }
 
     public Card(Symbol symbol, Color color) {
         this.symbol = symbol;
@@ -22,6 +27,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return color + " " + symbol ;
+        return (color != null ) ? (color + " " + symbol) : symbol.toString() ;
     }
 }

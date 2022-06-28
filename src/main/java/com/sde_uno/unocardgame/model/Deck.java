@@ -24,8 +24,19 @@ public class Deck implements Iterable<Card>{
         cards = new ArrayList<>(size);
         for (Color color: colors) {
             for (Symbol symbol: symbols) {
-                Card card = new Card(symbol, color);
-                cards.add(card);
+                if (symbol.needsColor()) {
+                    if (symbol.equals(Symbol.ZERO)) {
+                        Card card = new Card(symbol, color);
+                        cards.add(card);
+                    } else {
+                        Card card = new Card(symbol, color);
+                        cards.add(card);
+                        cards.add(card);
+                    }
+                } else {
+                    Card card = new Card(symbol);
+                    cards.add(card);
+                }
             }
         }
         reset();
@@ -57,7 +68,7 @@ public class Deck implements Iterable<Card>{
     }
 
     public int getDeckSize() {
-        return size;
+        return cards.size();
     }
 
     @Override

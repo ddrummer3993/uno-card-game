@@ -15,8 +15,18 @@ public enum Symbol {
     NINE("9"),
     DRAWTWO("D2"),
     SKIP("S"),
-    WILD("W"),
-    WILDDRAW("WD");
+    WILD("W"){
+        @Override
+        public boolean needsColor() {
+            return false;
+        }
+    },
+    WILDDRAWFOUR("WD4"){
+        @Override
+        public boolean needsColor() {
+            return false;
+        }
+    };
 
 
 
@@ -30,13 +40,11 @@ public enum Symbol {
         return abbreviation;
     }
 
-
-
-
-
-
-
+    public boolean needsColor() {
+        return true;
     }
+
+}
 
 
 

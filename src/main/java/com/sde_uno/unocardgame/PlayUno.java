@@ -3,9 +3,16 @@ package com.sde_uno.unocardgame;
 import com.sde_uno.unocardgame.model.Card;
 import com.sde_uno.unocardgame.model.Deck;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayUno {
 
     public static void main(String[] args) {
+
+        final List<String> discardPile = new ArrayList<>();
+        final List<String> playerHand = new ArrayList<>();
+        final List<String> computerHand = new ArrayList<>();
 
         //TEST TEST TEST
         Deck deck = new Deck();
