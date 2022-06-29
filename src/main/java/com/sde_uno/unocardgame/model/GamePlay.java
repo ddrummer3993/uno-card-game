@@ -14,10 +14,15 @@ public class GamePlay extends GameModerator {
     public static String playedSymbol;
     public static Card playedCard;
 
-    public static void playerMove(List playerHand, List discardPile,Deck deck) {
+    public static void playerMove(Deck deck) {
 
         System.out.println("Your Cards: " + playerHand);
         System.out.println("Playable Card: " + playableCard);
+        System.out.println(playableColorState);
+        System.out.println(playableSymbolState);
+        if (playableCard.contains("WILD")) {
+            System.out.println("The play color is: " + playableColorState);
+        }
 
         System.out.println("Please enter the card you would like to play OR enter DRAW.");
         playedCardString = scanner.nextLine();
@@ -27,14 +32,13 @@ public class GamePlay extends GameModerator {
         //compare the played card with color/symbol state and see if it can be played.
         if (playedCardString.contains(playableColorState) || playedCardString.contains(playableSymbolState)) {
             handleCardInHand();
-            playerMove(playerHand, discardPile, deck);
-        }  else {
+            playerMove(deck);
+        } else if (playedCardString.contains("WILD")) {
+            handleCardInHand();
+            handleWildCards(deck);
+        } else {
             System.out.println("Sorry, you cant play that. if you don't have a playable card, please enter DRAW");
         }
-
-//        else if (playedCardString.contains("WILD")) {
-//            handleWildCards(deck);
-//        }
 
 
 //        List<String> proposedCard = new ArrayList<>();
@@ -61,8 +65,8 @@ public class GamePlay extends GameModerator {
 //                assignPlayedCardState((Card) card);
 //            } else if (String.valueOf(card).equals("DRAW")) {
 //                drawCard(playerHand, deck);
-//                //TODO make it to where player can play drawn card IF playable.
-//                //TODO potentially pull out logic above into "isPlayable" class for multiple use. use boolean.
+//
+//
 //            }else {
 //                System.out.println("Sorry, you cant play that. if you don't have a playable card, please enter DRAW");
 //            }
@@ -73,6 +77,8 @@ public class GamePlay extends GameModerator {
 
     }
 
+    //TODO: card actions for skip and draw two.
+    //TODO: figure out "you dont have that card" message.
     public static void handleCardInHand() {
         for (String card: playerHand) {
             if (card.equals(playedCardString)) {
@@ -85,24 +91,22 @@ public class GamePlay extends GameModerator {
         }
     }
 
-//    public static void handleWildCards(Deck deck) {
-//        if (playedCardString.equals("WILD")) {
-//            assignPlayableCardState(playedCardString);
-//            System.out.println("You've played a WILDCARD! please choose a color: ");
-//            playableColorState = scanner.nextLine();
-//        } else if (playedCardString.equals("WILDDRAW4")) {
-//            assignPlayableCardState(playedCardString);
-//            System.out.println("You've played a WILDDRAW4! please choose a color: ");
-//            playableColorState = scanner.nextLine();
-//            for (int i = 1; i < 5; i++) {
-//                if (playerState.equals(State.PLAYER_ONE_MOVE)) {
-//                    drawCard(computerHand, deck);
-//                } else {
-//                    drawCard(playerHand, deck);
-//                }
-//            }
-//        }
-//    }
+    public static void handleWildCards(Deck deck) {
+        if (playedCardString.equals("WILD")) {
+            System.out.println("You've played a WILDCARD! please choose a color: ");
+            playableColorState = scanner.nextLine();
+        } else if (playedCardString.equals("WILDDRAW4")) {
+            System.out.println("You've played a WILDDRAW4! please choose a color: ");
+            playableColorState = scanner.nextLine();
+            for (int i = 1; i < 5; i++) {
+                if (playerState.equals(State.PLAYER_ONE_MOVE)) {
+                    drawCard(computerHand, deck);
+                } else {
+                    drawCard(playerHand, deck);
+                }
+            }
+        }
+    }
 
     public static void removeSpecificCard(int index, List list) {
         list.remove(index);

@@ -29,6 +29,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return (color != null ) ? (stringSymbol) : symbol.toString() ;
+        return (color != null ) ? (stringSymbol) : symbol.getAbbreviation() ;
     }
 }

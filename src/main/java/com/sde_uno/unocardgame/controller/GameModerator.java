@@ -14,7 +14,7 @@ public class GameModerator {
     public static final List<String> playerHand = new ArrayList<>();
     public static final List<String> computerHand = new ArrayList<>();
 
-    static int randNum = (Math.random() <= 0.5) ? 1 : 2;
+    static int randNum = 1;  //(Math.random() <= 0.5) ? 1 : 2;
 
     //State Variables
     public static String playableColorState;
@@ -45,7 +45,7 @@ public class GameModerator {
 
         while (overallGameState != false) {
             if(playerState == State.PLAYER_ONE_MOVE) {
-                GamePlay.playerMove(playerHand, discardPile, deck);
+                GamePlay.playerMove(deck);
             } else {
                 GamePlay.computerMove();
             }
@@ -94,12 +94,12 @@ public class GameModerator {
         for (String str: String.valueOf(card).split(" ")) {
             thisCard.add(str);
         }
-        if (thisCard.get(1).equals("WILD") || thisCard.get(1).equals("WILDDRAW4")) {
-            playableColorState = thisCard.get(1);
+        if (thisCard.get(0).equals("WILD") || thisCard.get(0).equals("WILDDRAW4")) {
+            playableSymbolState = thisCard.get(0);
        }else {
-            playableColorState = thisCard.get(0);
+            playableSymbolState = thisCard.get(1);
         }
-        playableSymbolState = thisCard.get(1);
+        playableColorState = thisCard.get(0);
         playableCard = card;
     }
 
