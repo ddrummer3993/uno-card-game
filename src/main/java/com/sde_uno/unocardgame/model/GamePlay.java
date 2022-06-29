@@ -41,38 +41,6 @@ public class GamePlay extends GameModerator {
         } else {
             System.out.println("Sorry, you cant play that. if you don't have a playable card, please enter DRAW");
         }
-
-
-//        List<String> proposedCard = new ArrayList<>();
-//        for (String str: playedCardString.split(" ")) {
-//            proposedCard.add(str);
-//        }
-//
-//        if (proposedCard.get(0).equals(playableColorState)) {
-//            handleCardInHand();
-//
-//        }
-
-
-
-
-
-        //test the proposed card against
-//        for (Object card: playerHand) {
-//            if(dissectCardColor((Card) card).equals(proposedCard.get(0))) {
-//                assignPlayedCardState((Card) card);
-//            } else if(dissectCardSymbol((Card) card).equals(proposedCard.get(1))) {
-//                assignPlayedCardState((Card) card);
-//            } else if (String.valueOf(card).equals("WILD") || String.valueOf(card).equals("WILDDRAW4")) {
-//                assignPlayedCardState((Card) card);
-//            } else if (String.valueOf(card).equals("DRAW")) {
-//                drawCard(playerHand, deck);
-//
-//
-//            }else {
-//                System.out.println("Sorry, you cant play that. if you don't have a playable card, please enter DRAW");
-//            }
-//        }
     }
 
     public static void computerMove() {
