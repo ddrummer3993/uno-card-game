@@ -2,11 +2,14 @@ package com.sde_uno.unocardgame;
 
 import com.sde_uno.unocardgame.model.Card;
 import com.sde_uno.unocardgame.model.Deck;
+import com.sde_uno.unocardgame.model.PlayableState;
+import com.sde_uno.unocardgame.model.Symbol;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PlayUno {
 
@@ -14,12 +17,10 @@ public class PlayUno {
     final static List<String> playerHand = new ArrayList<>();
     final static List<String> computerHand = new ArrayList<>();
 
+    private static PlayableState playableState;
+
+
     public static void main(String[] args) {
-
-        final List<String> discardPile = new ArrayList<>();
-        final List<String> playerHand = new ArrayList<>();
-        final List<String> computerHand = new ArrayList<>();
-
 
         //Actual Program - Play Uno
 
@@ -43,18 +44,26 @@ public class PlayUno {
         deck.shuffle();
         System.out.println("SHUFFLED: " + deck);
 
-
-
         //Deal 7 cards to each player, alternating as you deal.
-        unoGame.deal(deck);
+        deal(deck);
 
-        flipFirstCard(deck);
+        Card firstCard = pickCardFromDeck(deck);
 
+        if (firstCard.isPlayable()) {
+            setPlayableStateInGame(firstCard);
+            addToDiscardPile(firstCard);
+        } else if (Symbol.WILDDRAWFOUR.equals(firstCard.getSymbol())) {
+            // WILDDRAWFOUR cannot be the first card, so push it back to the deck in a random slot.
+            int randomNumber = new Random().nextInt(deck.getDeckSize());
+            deck.insertAt(randomNumber, firstCard);
+        } else {
+            //TODO Handle other wildcards.
+            addToDiscardPile(firstCard);
+        }
         checkDiscardPile();
 
 
         // flip top card of draw pile and create discard pile.
-
 
 
         //TODO assign top card in discard to playable game state.
@@ -95,15 +104,29 @@ public class PlayUno {
         System.out.println("COMP HAND: " + computerHand);
     }
 
-    public static void flipFirstCard(Deck deck) {
-        Card firstCard = deck.draw();
+    public static Card pickCardFromDeck(Deck deck) {
+        Card card = deck.draw();
         deck.removeCard();
-        discardPile.add(String.valueOf(firstCard));
-        System.out.println("First flipped card : " + firstCard);
+        System.out.println("Card flipped : " + card);
+        return card;
+    }
+
+    public static void addToDiscardPile(Card card) {
+        discardPile.add(String.valueOf(card));
+    }
+
+    private static void setPlayableStateInGame(Card card) {
+        String[] cardValues = String.valueOf(card).split(" ");
+        String color = cardValues[0];
+        String symbol = cardValues[1];
+        playableState.setColor(color);
+        playableState.setSymbol(symbol);
+
+        System.out.println("Playable color:  " + color);
+        System.out.println("Playable symbol:  " + symbol);
     }
 
     public static void checkDiscardPile() {
         System.out.println("Discard pile: " + discardPile);
     }
-
 }

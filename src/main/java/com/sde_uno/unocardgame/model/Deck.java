@@ -66,6 +66,10 @@ public class Deck implements Iterable<Card>{
         return cards.remove(0);
     }
 
+    public void insertAt(int index, Card card) {
+        cards.add(index, card);
+    }
+
     public int getRemaining() {
         return remaining;
     }

@@ -24,6 +24,12 @@ public class Card {
         return color;
     }
 
+    /**
+     * IF card is a playable card, or a wildcard.
+     */
+    public boolean isPlayable() {
+        return this.symbol.needsColor();
+    }
 
     @Override
     public String toString() {
