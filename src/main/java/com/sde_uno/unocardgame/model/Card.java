@@ -26,6 +26,7 @@ public class Card {
         return color;
     }
 
+    //TODO implement override for equals - refer to playing cards.
 
     @Override
     public String toString() {

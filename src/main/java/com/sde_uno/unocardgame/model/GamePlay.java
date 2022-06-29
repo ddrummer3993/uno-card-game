@@ -32,10 +32,12 @@ public class GamePlay extends GameModerator {
         //compare the played card with color/symbol state and see if it can be played.
         if (playedCardString.contains(playableColorState) || playedCardString.contains(playableSymbolState)) {
             handleCardInHand();
-            playerMove(deck);
+            playerMove(deck);       //TODO change to computer move
         } else if (playedCardString.contains("WILD")) {
             handleCardInHand();
             handleWildCards(deck);
+        } else if (playedCardString.equals("DRAW")) {
+            drawCard(playerHand, deck);
         } else {
             System.out.println("Sorry, you cant play that. if you don't have a playable card, please enter DRAW");
         }
@@ -86,6 +88,7 @@ public class GamePlay extends GameModerator {
                 discardPile.add(playerHand.get(index));
                 assignPlayableCardState(playerHand.get(index));
                 removeSpecificCard(index, playerHand);
+                //TODO if player hand is zero after removal, end game!
                 break;
             }
         }
