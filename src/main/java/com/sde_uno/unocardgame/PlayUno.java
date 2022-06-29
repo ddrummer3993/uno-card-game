@@ -11,16 +11,7 @@ import java.util.ArrayList;
 
 public class PlayUno {
 
-    final List<String> discardPile = new ArrayList<>();
-    final static List<String> playerHand = new ArrayList<>();
-    final static List<String> computerHand = new ArrayList<>();
-
     public static void main(String[] args) {
-
-        //State Variables
-        String playableColorState;
-        String playableSymbolState;
-
 
         //Actual Program - Play Uno
 
@@ -43,17 +34,8 @@ public class PlayUno {
         deck.shuffle();
         System.out.println("SHUFFLED: " + deck);
 
-
-
-        //Deal 7 cards to each player, alternating as you deal.
-        unoGame.deal(deck);
-
-
-        //TODO flip top card of draw pile and create discard pile.
-        //TODO assign top card in discard to playable game state.
-        unoGame.startGame(deck);
-        //TODO assign "dealer" status to one player, other player has first turn.
-        //TODO TEST ABOVE CODE. should have 4 lists w/ appropriate numbers of cards.
+        //Begin game via GameModerator
+        GameModerator.play(deck);
 
         //TODO determine first player, begin turn.
         GameModerator moderator = new GameModerator();
@@ -70,28 +52,4 @@ public class PlayUno {
         //TODO prompt player to play again.
 
     }
-
-    public static void deal(Deck deck) {
-        int hand = 1;
-        for (int i = 1; i < 15; i++) {
-            Card drawnCard = deck.draw();
-            deck.removeCard();
-            if (hand == 1) {
-                playerHand.add(String.valueOf(drawnCard));
-                hand = 2;
-            } else {
-                computerHand.add(String.valueOf(drawnCard));
-                hand = 1;
-            }
-        }
-        System.out.println("DECK: " + deck);
-        System.out.println(deck.getDeckSize());
-        System.out.println("PLAYER HAND: " + playerHand);
-        System.out.println("COMP HAND: " + computerHand);
-    }
-
-    public void startGame(Deck deck) {
-
-    }
-
 }
