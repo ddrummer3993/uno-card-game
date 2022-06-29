@@ -31,7 +31,7 @@ public class GamePlay extends GameModerator {
 
         //compare the played card with color/symbol state and see if it can be played.
         if (cardToPlayPlayer.contains(playableColorState) || cardToPlayPlayer.contains(playableSymbolState)) {
-            handleCardInHandPlayer();
+            handleCardInHandPlayer(deck);
             if (cardToPlayPlayer.contains("SKIP")) {
                 System.out.println("You played a skip! its your turn again.");
                 playerMove(deck);
@@ -43,20 +43,23 @@ public class GamePlay extends GameModerator {
                 //TODO: optional, make an if size = 1 and run a "CALL UNO!" option.
             } else if (playerHand.size() == 0) {
                 System.out.println("TEST END GAME");
+                overallGameState = false;
             } else {
                 computerMove(deck);
             }
-        } else if (cardToPlayPlayer.contains("WILD")) {
-            handleCardInHandPlayer();
-            handleWildCards(deck);
-            computerMove(deck);
-        } else if (cardToPlayPlayer.equals("DRAW")) {
+        }  else if (cardToPlayPlayer.equals("DRAW")) {
             drawCard(playerHand, deck);
             computerMove(deck);
         } else {
             System.out.println("Sorry, you cant play that. if you don't have a playable card, please enter DRAW");
         }
     }
+
+//    else if (cardToPlayPlayer.contains("WILD")) {
+//        handleCardInHandPlayer();
+//        handleWildCards(deck);
+//        computerMove(deck);
+//    }
 
     public static void computerMove(Deck deck) {
 
@@ -84,6 +87,7 @@ public class GamePlay extends GameModerator {
                 //TODO: optional, make an if size = 1 and run a "CALL UNO!" option.
             } else if (computerHand.size() == 0) {
                 System.out.println("TEST END GAME");
+                overallGameState = false;
             } else {
                 playerMove(deck);
             }
@@ -97,13 +101,16 @@ public class GamePlay extends GameModerator {
 
     //TODO: card actions for skip and draw two.
     //TODO: figure out "you dont have that card" message.
-    public static void handleCardInHandPlayer() {
+    public static void handleCardInHandPlayer(Deck deck) {
         for (String card: playerHand) {
             if (card.equals(cardToPlayPlayer)) {
                 int index = playerHand.indexOf(card);
                 discardPile.add(playerHand.get(index));
                 assignPlayableCardState(playerHand.get(index));
                 removeSpecificCard(index, playerHand);
+                if (cardToPlayPlayer.contains("WILD")) {
+                    handleWildCards(deck);
+                }
                 //TODO if player hand is zero after removal, end game!
                 break;
             }

@@ -4,9 +4,11 @@ import com.sde_uno.unocardgame.model.Card;
 import com.sde_uno.unocardgame.model.Deck;
 import com.sde_uno.unocardgame.model.GamePlay;
 import com.sde_uno.unocardgame.model.State;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class GameModerator {
 
@@ -27,7 +29,11 @@ public class GameModerator {
 
     public static void play(Deck deck) {
 
+        Scanner scanner = new Scanner(System.in);
+
         overallGameState = true;
+        String playAgain;
+
         //Deal 7 cards to each player, alternating as you deal.
         deal(deck);
 
@@ -45,7 +51,7 @@ public class GameModerator {
         }
         System.out.println("THIS PLAYERS TURN: " + playerState);
 
-        while (overallGameState != false) {
+        while (overallGameState) {
             if(playerState == State.PLAYER_ONE_MOVE) {
                 GamePlay.playerMove(deck);
             } else {
@@ -53,9 +59,19 @@ public class GameModerator {
             }
         }
 
-
-        //TODO determine if need new method for determining player state, and then call play method, or determine player state inside class and then use in method.
-
+        while (overallGameState = false) {
+            if (playerHand.size() == 0) {
+                System.out.println("CONGRATS! You've won the game!");
+                System.out.println("Would you like to play again? (Y/N)");
+                playAgain = scanner.nextLine();
+                if (playAgain.equals("Y")) {
+                    play(deck);
+                } else {
+                    System.out.println("Thanks for playing!");
+                }
+                break;
+            }
+        }
     }
 
     public static void deal(Deck deck) {
