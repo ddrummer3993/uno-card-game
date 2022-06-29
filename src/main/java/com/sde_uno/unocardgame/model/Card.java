@@ -4,6 +4,7 @@ public class Card {
     //Fields
     private Symbol symbol;
     private Color color;
+    private String stringSymbol;
 
 
 
@@ -14,6 +15,7 @@ public class Card {
     public Card(Symbol symbol, Color color) {
         this.symbol = symbol;
         this.color = color;
+        stringSymbol = color.getAbbreviation() + " " + symbol.getAbbreviation();
     }
 
 
@@ -27,6 +29,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return (color != null ) ? (color + " " + symbol) : symbol.toString() ;
+        return (color != null ) ? (stringSymbol) : symbol.toString() ;
     }
 }

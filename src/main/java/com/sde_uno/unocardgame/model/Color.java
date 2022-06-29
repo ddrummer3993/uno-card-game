@@ -2,19 +2,19 @@ package com.sde_uno.unocardgame.model;
 
 public enum Color {
 
-    RED("R"),
-    GREEN("G"),
-    BLUE("B"),
-    YELLOW("Y");
+    RED("RED"),
+    GREEN("GREEN"),
+    BLUE("BLUE"),
+    YELLOW("YELLOW");
 
 
-    private final String colorSymbol;
+    private final String abbreviation;
 
-    Color(String colorSymbol) {
-        this.colorSymbol = colorSymbol;
+    Color(String abbreviation) {
+        this.abbreviation = abbreviation;
     }
 
-    public String getColorSymbol() {
-        return colorSymbol;
+    public String getAbbreviation() {
+        return abbreviation;
     }
 }
