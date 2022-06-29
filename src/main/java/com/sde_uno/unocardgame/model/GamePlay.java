@@ -43,7 +43,24 @@ public class GamePlay extends GameModerator {
         }
     }
 
-    public static void computerMove() {
+    public static void computerMove(Deck deck) {
+
+        System.out.println("It is the Computers Move...");
+
+        System.out.println("Comp Cards: " + computerHand);
+        System.out.println("Playable Card: " + playableCard);
+        System.out.println(playableColorState);
+        System.out.println(playableSymbolState);
+        if (playableCard.contains("WILD")) {
+            System.out.println("The play color is: " + playableColorState);
+        }
+
+        //see if computer has playable card, if so play it, if not, draw.
+        if (compHandPlayable()) {
+            playCompHand(deck);
+        } else {
+            drawCard(computerHand, deck);
+        }
 
     }
 
@@ -89,32 +106,21 @@ public class GamePlay extends GameModerator {
         playerHand.add(String.valueOf(drawnCard));
     }
 
-//    public static String dissectCardColor(Card card) {
-//        List<String> thisCard = new ArrayList<>();
-//        for (String str: String.valueOf(card).split(" ")) {
-//            thisCard.add(str);
-//        }
-//        return thisCard.get(0);
-//    }
-//
-//    public static String dissectCardSymbol(Card card) {
-//        List<String> thisCard = new ArrayList<>();
-//        for (String str: String.valueOf(card).split(" ")) {
-//            thisCard.add(str);
-//        }
-//        return thisCard.get(1);
-//    }
+    public static boolean compHandPlayable() {
+        return computerHand.stream()
+                .anyMatch(card -> (card.contains(playableCard.getColor().name()) || card.contains(playableCard.getSymbol().name())));
+    }
 
-//    public static void assignPlayedCardState(List proposedCard) {
-//        if (proposedCard.get(1).equals("WILD") || proposedCard.get(1).equals("WILDDRAW4")) {
-//            playedColor = (String) proposedCard.get(1);
-//            playedSymbol = (String) proposedCard.get(1);
-//            playedCard = card;
-//        }else {
-//            playedColor = thisCard.get(0);
-//            playedSymbol = thisCard.get(1);
-//            playedCard = card;
-//        }
-//    }
+    public static void playCompHand(Deck deck) {
+        String cardToPlay = computerHand.stream()
+                .filter(card -> (card.contains(playableCard.getColor().name() || card.contains(playableCard.getSymbol().name())))
+                        .findFirst().get());
+        if (cardToPlay.equals("WILD") || cardToPlay.equals("WILDDRAW4")) {
+            handleCardInHand();
+            handleWildCards(deck);
+        } else {
+            handleCardInHand();
+        }
+    }
 
 }

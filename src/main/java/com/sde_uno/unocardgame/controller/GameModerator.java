@@ -47,7 +47,7 @@ public class GameModerator {
             if(playerState == State.PLAYER_ONE_MOVE) {
                 GamePlay.playerMove(deck);
             } else {
-                GamePlay.computerMove();
+                GamePlay.computerMove(deck);
             }
         }
 
