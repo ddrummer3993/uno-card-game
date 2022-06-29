@@ -7,10 +7,10 @@ public class Card {
     private String stringSymbol;
 
 
-
     public Card(Symbol symbol) {
         this.symbol = symbol;
     }
+
 
     public Card(Symbol symbol, Color color) {
         this.symbol = symbol;
