@@ -22,8 +22,6 @@ public class PlayUno {
         String playableSymbolState;
 
 
-
-
         //Actual Program - Play Uno
 
         PlayUno unoGame = new PlayUno();
