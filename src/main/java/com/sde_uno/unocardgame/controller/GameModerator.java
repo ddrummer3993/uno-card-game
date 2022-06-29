@@ -19,9 +19,10 @@ public class GameModerator {
     //State Variables
     public static String playableColorState;
     public static String playableSymbolState;
+    public static Card playableCard;
 
-    private static State playerState;
-    private static boolean overallGameState;
+    public static State playerState;
+    public static boolean overallGameState;
 
 
     public static void play(Deck deck) {
@@ -44,7 +45,7 @@ public class GameModerator {
 
         while (overallGameState != false) {
             if(playerState == State.PLAYER_ONE_MOVE) {
-                GamePlay.playerMove();
+                GamePlay.playerMove(playerHand, discardPile, deck);
             } else {
                 GamePlay.computerMove();
             }
@@ -75,15 +76,15 @@ public class GameModerator {
     }
 
     public static void flipFirstCard(Deck deck) {
-        Card firstCard = deck.draw();
+        playableCard = deck.draw();
         deck.removeCard();
-        discardPile.add(String.valueOf(firstCard));
+        discardPile.add(String.valueOf(playableCard));
 
-        System.out.println("First flipped card : " + firstCard);
+        System.out.println("First flipped card : " + playableCard);
         System.out.println("Discard pile: " + discardPile);
         System.out.println("Draw Pile: " + deck);
 
-        assignPlayableCardState(firstCard);
+        assignPlayableCardState(playableCard);
         System.out.println("PLAY COLOR: " + playableColorState);
         System.out.println("PLAY SYMBOL: " + playableSymbolState);
     }
