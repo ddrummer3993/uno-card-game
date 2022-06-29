@@ -32,7 +32,20 @@ public class GamePlay extends GameModerator {
         //compare the played card with color/symbol state and see if it can be played.
         if (cardToPlayPlayer.contains(playableColorState) || cardToPlayPlayer.contains(playableSymbolState)) {
             handleCardInHandPlayer();
-            computerMove(deck);
+            if (cardToPlayPlayer.contains("SKIP")) {
+                System.out.println("You played a skip! its your turn again.");
+                playerMove(deck);
+            } else if (cardToPlayPlayer.contains("DRAW2")) {
+                drawCard(computerHand, deck);
+                drawCard(computerHand, deck);
+                System.out.println("You played a DRAW2. The computer has drawn and it is your turn again.");
+                playerMove(deck);
+                //TODO: optional, make an if size = 1 and run a "CALL UNO!" option.
+            } else if (playerHand.size() == 0) {
+                System.out.println("TEST END GAME");
+            } else {
+                computerMove(deck);
+            }
         } else if (cardToPlayPlayer.contains("WILD")) {
             handleCardInHandPlayer();
             handleWildCards(deck);
@@ -60,7 +73,20 @@ public class GamePlay extends GameModerator {
         //see if computer has playable card, if so play it, if not, draw.
         if (compHandPlayable()) {
             playCompHand(deck);
-            playerMove(deck);
+            if (cardToPlayComputer.contains("SKIP")) {
+                System.out.println("The Computer skipped you and gets to go again.");
+                computerMove(deck);
+            } else if (cardToPlayComputer.contains("DRAW2")) {
+                drawCard(playerHand, deck);
+                drawCard(playerHand, deck);
+                System.out.println("The Computer played a DRAW2. you Draw 2 and it is the Computers turn again.");
+                computerMove(deck);
+                //TODO: optional, make an if size = 1 and run a "CALL UNO!" option.
+            } else if (computerHand.size() == 0) {
+                System.out.println("TEST END GAME");
+            } else {
+                playerMove(deck);
+            }
         } else {
             drawCard(computerHand, deck);
             System.out.println("The computer drew a card.");
