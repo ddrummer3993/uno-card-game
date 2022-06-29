@@ -15,13 +15,13 @@ public enum Symbol {
     NINE("9"),
     DRAWTWO("D2"),
     SKIP("S"),
-    WILD("W") {
+    WILD("WILD") {
         @Override
         public boolean needsColor() {
             return false;
         }
     },
-    WILDDRAWFOUR("WD4") {
+    WILDDRAWFOUR("WILDDRAW4") {
         @Override
         public boolean needsColor() {
             return false;

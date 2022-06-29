@@ -11,15 +11,15 @@ import java.util.List;
 public class GameModerator {
 
     public static final List<String> discardPile = new ArrayList<>();
-    static final List<String> playerHand = new ArrayList<>();
+    public static final List<String> playerHand = new ArrayList<>();
     public static final List<String> computerHand = new ArrayList<>();
 
-    static int randNum = (Math.random() <= 0.5) ? 1 : 2;
+    static int randNum = 1;  //(Math.random() <= 0.5) ? 1 : 2;
 
     //State Variables
     public static String playableColorState;
     public static String playableSymbolState;
-    public static Card playableCard;
+    public static String playableCard;
 
     public static State playerState;
     public static boolean overallGameState;
@@ -45,9 +45,9 @@ public class GameModerator {
 
         while (overallGameState != false) {
             if(playerState == State.PLAYER_ONE_MOVE) {
-                GamePlay.playerMove(playerHand, discardPile, deck);
+                GamePlay.playerMove(deck);
             } else {
-                GamePlay.computerMove();
+                GamePlay.computerMove(deck);
             }
         }
 
@@ -76,7 +76,7 @@ public class GameModerator {
     }
 
     public static void flipFirstCard(Deck deck) {
-        playableCard = deck.draw();
+        playableCard = String.valueOf(deck.draw());
         deck.removeCard();
         discardPile.add(String.valueOf(playableCard));
 
@@ -84,18 +84,24 @@ public class GameModerator {
         System.out.println("Discard pile: " + discardPile);
         System.out.println("Draw Pile: " + deck);
 
-        assignPlayableCardState(playableCard);
+        assignPlayableCardState(String.valueOf(playableCard));
         System.out.println("PLAY COLOR: " + playableColorState);
         System.out.println("PLAY SYMBOL: " + playableSymbolState);
     }
 
-    public static void assignPlayableCardState(Card card) {
+    public static void assignPlayableCardState(String card) {
         List<String> thisCard = new ArrayList<>();
         for (String str: String.valueOf(card).split(" ")) {
             thisCard.add(str);
         }
+        if (thisCard.get(0).equals("WILD") || thisCard.get(0).equals("WILDDRAW4")) {
+            playableSymbolState = thisCard.get(0);
+       }else {
+            playableSymbolState = thisCard.get(1);
+        }
         playableColorState = thisCard.get(0);
-        playableSymbolState = thisCard.get(1);
+        playableCard = card;
     }
+
 
 }
