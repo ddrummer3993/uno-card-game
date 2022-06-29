@@ -14,7 +14,7 @@ public class GameModerator {
     public static final List<String> playerHand = new ArrayList<>();
     public static final List<String> computerHand = new ArrayList<>();
 
-    static int randNum = 1;  //(Math.random() <= 0.5) ? 1 : 2;
+    static int randNum = (Math.random() <= 0.5) ? 1 : 2;
 
     //State Variables
     public static String playableColorState;
@@ -33,6 +33,8 @@ public class GameModerator {
 
         //flips top card and assigns it to playable color and symbol state.
         flipFirstCard(deck);
+
+        System.out.println("LET THE GAME BEGIN!");
 
         //Game Moderator randomly decides who goes first
 

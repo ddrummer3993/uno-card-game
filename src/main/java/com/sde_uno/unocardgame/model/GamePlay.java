@@ -2,15 +2,15 @@ package com.sde_uno.unocardgame.model;
 
 import com.sde_uno.unocardgame.controller.GameModerator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GamePlay extends GameModerator {
 
     static Scanner scanner = new Scanner(System.in);
-    public static String playedCardString;
-    public static String playedColor;
+    public static String cardToPlayPlayer;
+    public static String cardToPlayComputer;
     public static String playedSymbol;
     public static Card playedCard;
 
@@ -25,19 +25,21 @@ public class GamePlay extends GameModerator {
         }
 
         System.out.println("Please enter the card you would like to play OR enter DRAW.");
-        playedCardString = scanner.nextLine();
+        cardToPlayPlayer = scanner.nextLine();
 
-        System.out.println(playedCardString);
+        System.out.println(cardToPlayPlayer);
 
         //compare the played card with color/symbol state and see if it can be played.
-        if (playedCardString.contains(playableColorState) || playedCardString.contains(playableSymbolState)) {
-            handleCardInHand();
-            playerMove(deck);       //TODO change to computer move
-        } else if (playedCardString.contains("WILD")) {
-            handleCardInHand();
+        if (cardToPlayPlayer.contains(playableColorState) || cardToPlayPlayer.contains(playableSymbolState)) {
+            handleCardInHandPlayer();
+            computerMove(deck);
+        } else if (cardToPlayPlayer.contains("WILD")) {
+            handleCardInHandPlayer();
             handleWildCards(deck);
-        } else if (playedCardString.equals("DRAW")) {
+            computerMove(deck);
+        } else if (cardToPlayPlayer.equals("DRAW")) {
             drawCard(playerHand, deck);
+            computerMove(deck);
         } else {
             System.out.println("Sorry, you cant play that. if you don't have a playable card, please enter DRAW");
         }
@@ -58,17 +60,20 @@ public class GamePlay extends GameModerator {
         //see if computer has playable card, if so play it, if not, draw.
         if (compHandPlayable()) {
             playCompHand(deck);
+            playerMove(deck);
         } else {
             drawCard(computerHand, deck);
+            System.out.println("The computer drew a card.");
+            playerMove(deck);
         }
 
     }
 
     //TODO: card actions for skip and draw two.
     //TODO: figure out "you dont have that card" message.
-    public static void handleCardInHand() {
+    public static void handleCardInHandPlayer() {
         for (String card: playerHand) {
-            if (card.equals(playedCardString)) {
+            if (card.equals(cardToPlayPlayer)) {
                 int index = playerHand.indexOf(card);
                 discardPile.add(playerHand.get(index));
                 assignPlayableCardState(playerHand.get(index));
@@ -80,18 +85,14 @@ public class GamePlay extends GameModerator {
     }
 
     public static void handleWildCards(Deck deck) {
-        if (playedCardString.equals("WILD")) {
+        if (cardToPlayPlayer.equals("WILD")) {
             System.out.println("You've played a WILDCARD! please choose a color: ");
             playableColorState = scanner.nextLine();
-        } else if (playedCardString.equals("WILDDRAW4")) {
+        } else if (cardToPlayPlayer.equals("WILDDRAW4")) {
             System.out.println("You've played a WILDDRAW4! please choose a color: ");
             playableColorState = scanner.nextLine();
             for (int i = 1; i < 5; i++) {
-                if (playerState.equals(State.PLAYER_ONE_MOVE)) {
-                    drawCard(computerHand, deck);
-                } else {
-                    drawCard(playerHand, deck);
-                }
+                drawCard(computerHand, deck);
             }
         }
     }
@@ -108,18 +109,47 @@ public class GamePlay extends GameModerator {
 
     public static boolean compHandPlayable() {
         return computerHand.stream()
-                .anyMatch(card -> (card.contains(playableCard.getColor().name()) || card.contains(playableCard.getSymbol().name())));
+                .anyMatch(card -> ((card.contains(playableColorState) || card.contains(playableSymbolState))) || card.contains("WILD"));
     }
 
     public static void playCompHand(Deck deck) {
-        String cardToPlay = computerHand.stream()
-                .filter(card -> (card.contains(playableCard.getColor().name() || card.contains(playableCard.getSymbol().name())))
-                        .findFirst().get());
-        if (cardToPlay.equals("WILD") || cardToPlay.equals("WILDDRAW4")) {
-            handleCardInHand();
-            handleWildCards(deck);
+        cardToPlayComputer = computerHand.stream()
+                .filter(card -> ((card.contains(playableColorState) || card.contains(playableSymbolState))) || card.contains("WILD"))
+                        .findFirst().get();
+        if (cardToPlayComputer.equals("WILD") || cardToPlayComputer.equals("WILDDRAW4")) {
+            handleCardInHandComputer();
+            handleCompWildCards(deck);
+            System.out.println("The Computer played: " + cardToPlayComputer);
         } else {
-            handleCardInHand();
+            handleCardInHandComputer();
+            System.out.println("The Computer played: " + cardToPlayComputer);
+        }
+    }
+
+    public static void handleCompWildCards(Deck deck) {
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 5);
+        System.out.println(randomNum);
+
+        if (cardToPlayComputer.equals("WILD")) {
+            playableColorState = String.valueOf(Color.values()[randomNum]);
+        } else if (cardToPlayComputer.equals("WILDDRAW4")) {
+            playableColorState = String.valueOf(Color.values()[randomNum]);
+            for (int i = 1; i < 5; i++) {
+                drawCard(playerHand, deck);
+            }
+        }
+    }
+
+    public static void handleCardInHandComputer() {
+        for (String card: computerHand) {
+            if (card.equals(cardToPlayComputer)) {
+                int index = computerHand.indexOf(card);
+                discardPile.add(computerHand.get(index));
+                assignPlayableCardState(computerHand.get(index));
+                removeSpecificCard(index, computerHand);
+                //TODO if player hand is zero after removal, end game!
+                break;
+            }
         }
     }
 
