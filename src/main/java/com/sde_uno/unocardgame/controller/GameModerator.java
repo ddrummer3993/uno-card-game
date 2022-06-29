@@ -10,9 +10,9 @@ import java.util.List;
 
 public class GameModerator {
 
-    static final List<String> discardPile = new ArrayList<>();
+    public static final List<String> discardPile = new ArrayList<>();
     static final List<String> playerHand = new ArrayList<>();
-    static final List<String> computerHand = new ArrayList<>();
+    public static final List<String> computerHand = new ArrayList<>();
 
     static int randNum = (Math.random() <= 0.5) ? 1 : 2;
 
