@@ -1,9 +1,6 @@
 package com.sde_uno.unocardgame.controller;
 
-import com.sde_uno.unocardgame.model.Card;
-import com.sde_uno.unocardgame.model.Deck;
-import com.sde_uno.unocardgame.model.GamePlay;
-import com.sde_uno.unocardgame.model.State;
+import com.sde_uno.unocardgame.model.*;
 import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
@@ -96,6 +93,10 @@ public class GameModerator {
         System.out.println("Draw Pile: " + deck);
 
         assignPlayableCardState(String.valueOf(playableCard));
+        if (playableCard.contains("WILD")) {
+            int randomNum = (int) ((Math.random() * 4) + 1);
+            playableColorState = String.valueOf(Color.values()[randomNum]);
+        }
         System.out.println("PLAY COLOR: " + playableColorState);
         System.out.println("PLAY SYMBOL: " + playableSymbolState);
     }
