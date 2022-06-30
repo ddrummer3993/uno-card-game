@@ -5,7 +5,7 @@ public class Card {
     private Symbol symbol;
     private Color color;
     private int hash;
-    private String colorSymbol;
+    private String stringSymbol;
 
 
     public Card(Symbol symbol) {
@@ -16,7 +16,7 @@ public class Card {
         this.symbol = symbol;
         this.color = color;
         hash = Objects.hash(symbol, color);
-        colorSymbol = symbol.getAbbreviation() + color.getColorSymbol();
+        stringSymbol = symbol.getAbbreviation() + " " + color.getAbbreviation();
     }
 
 
@@ -47,7 +47,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return (color != null ) ? (color + " " + symbol) : symbol.toString() ;
+        return (color != null ) ? (stringSymbol) : symbol.getAbbreviation() ;
     }
 
 
