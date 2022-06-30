@@ -40,7 +40,7 @@ public class GameModerator extends PlayUno {
         //flips top card and assigns it to playable color and symbol state.
         flipFirstCard(deck);
 
-        System.out.println("LET THE GAME BEGIN!");
+        System.out.println("LET THE UNO GAME BEGIN!");
 
         //Game Moderator randomly decides who goes first
         if (randNum == 1) {

@@ -218,12 +218,12 @@ public class GamePlay extends GameModerator {
     //ADDITIONAL METHODS
 
     //removes a specific card form a deck via index number
-    public static void removeSpecificCard(int index, List list) {
+    public static void removeSpecificCard(int index, List<String> list) {
         list.remove(index);
     }
 
     //draws a card from a deck.
-    public static void drawCard(List playerHand, Deck deck) {
+    public static void drawCard(List<String> playerHand, Deck deck) {
         Card drawnCard = deck.draw();
         deck.removeCard();
         playerHand.add(String.valueOf(drawnCard));
@@ -242,7 +242,7 @@ public class GamePlay extends GameModerator {
             play();
         } else {
             System.out.println("Thanks for playing!");
-            overallGameState = false;
+            System.exit(0);
         }
     }
 
