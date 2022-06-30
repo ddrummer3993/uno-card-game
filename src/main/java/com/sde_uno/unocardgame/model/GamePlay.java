@@ -37,7 +37,7 @@ public class GamePlay extends GameModerator {
         System.out.println(cardToPlayPlayer);
 
         //check to see if card is playable via discard pile and hand. if so, analyses card type and acts accordingly.
-        if (playerCardPlayable(deck) && playerCardInHand(deck)) {
+        if ((playerCardPlayable(deck) && playerCardInHand(deck)) || cardToPlayPlayer.equals("DRAW")) {
             playPlayerCard(deck);
             if (cardToPlayPlayer.contains("SKIP")) {
                 System.out.println("You played a skip! its your turn again.");
@@ -47,7 +47,6 @@ public class GamePlay extends GameModerator {
                 drawCard(computerHand, deck);
                 System.out.println("You played a DRAWTWO. The computer has drawn and it is your turn again.");
                 playerMove(deck);
-                //TODO: optional, make an if size = 1 and run a "CALL UNO!" option.
             } else if (cardToPlayPlayer.equals("DRAW")) {
                 drawCard(playerHand, deck);
                 System.out.println("You have Drawn a card.");
@@ -154,7 +153,6 @@ public class GamePlay extends GameModerator {
                 drawCard(playerHand, deck);
                 System.out.println("The Computer played a DRAWTWO. you Draw 2 and it is the Computers turn again.");
                 computerMove(deck);
-                //TODO: optional, make an if size = 1 and run a "CALL UNO!" option.
             } else {
                 playerMove(deck);
             }
