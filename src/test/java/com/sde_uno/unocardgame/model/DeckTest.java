@@ -3,13 +3,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 class DeckTest {
-    @Test
-    void resetDeck() {
-        // This doesn't seem like it would work
-    }
+
     @Test
     void shuffleDeck() {
-        //shuffle deck and compare to see if decks are the same
         Deck deck1 = new Deck();
         Deck deck2 = new Deck();
         deck1.shuffle();
@@ -29,19 +25,18 @@ class DeckTest {
         Card card = deck.draw();
         assertNotNull(Symbol.valueOf(card.getSymbol().name()), "Card is missing symbol");
     }
+
     @Test
-    void getRemaining() {
+    void deckCardHasColor() {
         Deck deck = new Deck();
-        int remainingBeforeDrawing = deck.getRemaining();
-        deck.draw();
-        int remainingAfterDrawing = deck.getRemaining();
-        assertNotEquals(remainingAfterDrawing, remainingAfterDrawing, "Remaining card count in deck are invalid");
+        deck.shuffle();
+        Card card = deck.draw();
+        assertNotNull(Symbol.valueOf(card.getColor().name()), "Card is missing color");
     }
+
     @Test
     void getDeckSize() {
         Deck deck = new Deck();
         assertEquals(100,deck.getDeckSize());
-        deck.draw();
-        assertEquals(99, deck.getDeckSize(), "Deck size is not updated after drawing!");
     }
 }

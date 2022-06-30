@@ -13,9 +13,7 @@ public class Deck implements Iterable<Card>{
     private final int wildSize = 4;
     private final int wildDrawFourSize = 4;
     private final int size = (redNumSize + blueNumSize + greenNumSize + yellowNumSize + skipSize + drawTwoSize + wildSize + wildDrawFourSize);
-    private int remaining;
     private final List<Card> cards;
-    private Iterator<Card> iterator;
 
     public Deck() {
         Color[] colors = Color.values();
@@ -43,8 +41,8 @@ public class Deck implements Iterable<Card>{
     }
 
     public void reset() {
-        iterator = cards.iterator();
-        remaining = size;
+        Iterator<Card> iterator = cards.iterator();
+        int remaining = size;
     }
 
     public void shuffle() {
@@ -52,7 +50,6 @@ public class Deck implements Iterable<Card>{
         reset();
     }
 
-    //TODO create sort method
     public Card draw() {
         try {
             Card card = cards.get(0);
@@ -66,10 +63,6 @@ public class Deck implements Iterable<Card>{
         return cards.remove(0);
     }
 
-    public int getRemaining() {
-        return remaining;
-    }
-
     public int getDeckSize() {
         return cards.size();
     }
@@ -81,14 +74,11 @@ public class Deck implements Iterable<Card>{
 
     @Override
     public boolean equals(Object obj) {
-    //TODO look @ playing cards to implements equals
         return super.equals(obj);
     }
-    //TODO implement equals - refer to playing cards
 
     @Override
     public int hashCode() {
-        //TODO look @ playing cards for hashcode
         return super.hashCode();
     }
 

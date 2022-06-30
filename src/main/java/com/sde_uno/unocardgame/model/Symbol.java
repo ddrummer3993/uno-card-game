@@ -1,7 +1,5 @@
 package com.sde_uno.unocardgame.model;
 
-import java.awt.*;
-
 public enum Symbol {
     ZERO("0"),
     ONE("1"),
@@ -13,7 +11,7 @@ public enum Symbol {
     SEVEN("7"),
     EIGHT("8"),
     NINE("9"),
-    DRAWTWO("DRAW2"),
+    DRAWTWO("DRAWTWO"),
     SKIP("SKIP"),
     WILD("WILD") {
         @Override
@@ -21,13 +19,12 @@ public enum Symbol {
             return false;
         }
     },
-    WILDDRAWFOUR("WILDDRAW4") {
+    WILDDRAWFOUR("WILDDRAWFOUR") {
         @Override
         public boolean needsColor() {
             return false;
         }
     };
-
 
     private final String abbreviation;
 

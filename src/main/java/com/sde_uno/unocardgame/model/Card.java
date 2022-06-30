@@ -7,7 +7,6 @@ public class Card {
     private int hash;
     private String stringSymbol;
 
-
     public Card(Symbol symbol) {
         this.symbol = symbol;
     }
@@ -16,9 +15,8 @@ public class Card {
         this.symbol = symbol;
         this.color = color;
         hash = Objects.hash(symbol, color);
-        stringSymbol = symbol.getAbbreviation() + " " + color.getAbbreviation();
+        stringSymbol = color.getAbbreviation() + " " + symbol.getAbbreviation();
     }
-
 
     public Symbol getSymbol() {
         return symbol;

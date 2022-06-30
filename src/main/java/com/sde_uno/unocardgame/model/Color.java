@@ -7,7 +7,6 @@ public enum Color {
     BLUE("BLUE"),
     YELLOW("YELLOW");
 
-
     private final String abbreviation;
 
     Color(String abbreviation) {
