@@ -37,7 +37,7 @@ public class GamePlay extends GameModerator {
         System.out.println(cardToPlayPlayer);
 
         //check to see if card is playable via discard pile and hand. if so, analyses card type and acts accordingly.
-        if ((playerCardPlayable(deck) && playerCardInHand(deck)) || cardToPlayPlayer.equals("DRAW")) {
+        if ((playerCardPlayable(deck) && playerCardInHand(deck))) {
             playPlayerCard(deck);
             if (cardToPlayPlayer.contains("SKIP")) {
                 System.out.println("You played a skip! its your turn again.");
@@ -75,6 +75,8 @@ public class GamePlay extends GameModerator {
     public static boolean playerCardInHand(Deck deck) {
         boolean cardInHand = false;
         if (playerHand.stream().anyMatch(card -> ((card.equals(cardToPlayPlayer))))) {
+            cardInHand = true;
+        } else if (cardToPlayPlayer.contains("DRAW")){
             cardInHand = true;
         } else {
             System.out.println("You don't have that card in your hand!");
