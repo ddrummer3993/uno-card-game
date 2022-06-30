@@ -2,10 +2,8 @@ package com.sde_uno.unocardgame.model;
 
 import com.sde_uno.unocardgame.controller.GameModerator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class GamePlay extends GameModerator {
 
@@ -33,9 +31,9 @@ public class GamePlay extends GameModerator {
         System.out.println(cardToPlayPlayer);
 
         //compare the played card with color/symbol state and see if it can be played.
-        if (playerHandPlayable()) {
+        if (playerCardPlayable()) {
             System.out.println("this card is playable");
-            playPlayerHand(deck);
+            playPlayerCard(deck);
             if (cardToPlayPlayer.contains("SKIP")) {
                 System.out.println("You played a skip! its your turn again.");
                 playerMove(deck);
@@ -45,18 +43,15 @@ public class GamePlay extends GameModerator {
                 System.out.println("You played a DRAW2. The computer has drawn and it is your turn again.");
                 playerMove(deck);
                 //TODO: optional, make an if size = 1 and run a "CALL UNO!" option.
+            } else if (cardToPlayPlayer.equals("DRAW")) {
+                drawCard(playerHand, deck);
+                System.out.println("You have Drawn a card.");
+                computerMove(deck);
             } else if (playerHand.size() == 0) {
-                System.out.println("TEST END GAME");
-                overallGameState = false;
+                endGame(deck);
             } else {
                 computerMove(deck);
             }
-        }  else if (cardToPlayPlayer.equals("DRAW")) {
-            drawCard(playerHand, deck);
-            System.out.println("You have Drawn a card.");
-            computerMove(deck);
-        } else {
-            System.out.println("Sorry, you cant play that. if you don't have a playable card, please enter DRAW");
         }
     }
 
@@ -66,12 +61,20 @@ public class GamePlay extends GameModerator {
 //        computerMove(deck);
 //    }
 
-    public static boolean playerHandPlayable() {
-        return playerHand.stream()
-                .anyMatch(card -> ((card.contains(playableColorState) || card.contains(playableSymbolState))) || card.contains("WILD"));
+    public static boolean playerCardPlayable() {
+        boolean playable = false;
+        if (cardToPlayPlayer.contains(playableColorState) || cardToPlayPlayer.contains(playableSymbolState)) {
+            playable = true;
+        } else if (cardToPlayPlayer.contains("DRAW") || cardToPlayPlayer.contains("WILD")){
+            playable = true;
+        } else {
+            System.out.println("Sorry, you cant play that. if you don't have a playable card, please enter DRAW");
+        }
+
+        return playable;
     }
 
-    public static void playPlayerHand(Deck deck) {
+    public static void playPlayerCard(Deck deck) {
         handleCardInHandPlayer();
         if (cardToPlayPlayer.equals("WILD") || cardToPlayPlayer.equals("WILDDRAW4")) {
             handleCardInHandPlayer();
@@ -123,7 +126,7 @@ public class GamePlay extends GameModerator {
 
         //see if computer has playable card, if so play it, if not, draw.
         if (compHandPlayable()) {
-            playCompHand(deck);
+            playCompCard(deck);
             if (cardToPlayComputer.contains("SKIP")) {
                 System.out.println("The Computer skipped you and gets to go again.");
                 computerMove(deck);
@@ -134,8 +137,7 @@ public class GamePlay extends GameModerator {
                 computerMove(deck);
                 //TODO: optional, make an if size = 1 and run a "CALL UNO!" option.
             } else if (computerHand.size() == 0) {
-                System.out.println("TEST END GAME");
-                overallGameState = false;
+                endGame(deck);
             } else {
                 playerMove(deck);
             }
@@ -151,14 +153,13 @@ public class GamePlay extends GameModerator {
                 .anyMatch(card -> ((card.contains(playableColorState) || card.contains(playableSymbolState))) || card.contains("WILD"));
     }
 
-    public static void playCompHand(Deck deck) {
+    public static void playCompCard(Deck deck) {
         cardToPlayComputer = computerHand.stream()
                 .filter(card -> ((card.contains(playableColorState) || card.contains(playableSymbolState))) || card.contains("WILD"))
                 .findFirst().get();
         if (cardToPlayComputer.equals("WILD") || cardToPlayComputer.equals("WILDDRAW4")) {
             handleCardInHandComputer();
             handleCompWildCards(deck);
-            System.out.println("The Computer played: " + cardToPlayComputer);
         } else {
             handleCardInHandComputer();
             System.out.println("The Computer played: " + cardToPlayComputer);
@@ -184,11 +185,14 @@ public class GamePlay extends GameModerator {
 
         if (cardToPlayComputer.equals("WILD")) {
             playableColorState = String.valueOf(Color.values()[randomNum]);
+            System.out.println("The Computer played: " + cardToPlayComputer);
         } else if (cardToPlayComputer.equals("WILDDRAW4")) {
             playableColorState = String.valueOf(Color.values()[randomNum]);
             for (int i = 1; i < 5; i++) {
                 drawCard(playerHand, deck);
             }
+            System.out.println("The Computer played: " + cardToPlayComputer);
+            System.out.println("The computer played a wild draw 4. You drew 4 cards.");
         }
     }
 
@@ -202,6 +206,22 @@ public class GamePlay extends GameModerator {
         Card drawnCard = deck.draw();
         deck.removeCard();
         playerHand.add(String.valueOf(drawnCard));
+    }
+
+    public static void endGame(Deck deck) {
+        if(playerHand.size() == 0) {
+            System.out.println("CONGRATS! You've won the game!");
+        } else {
+            System.out.println("The computer has won. Better luck next time!");
+        }
+        System.out.println("Would you like to Play again? (Y/N)");
+        String playAgain = scanner.nextLine();
+        if (playAgain.equals("Y")) {
+            play();
+        } else {
+            System.out.println("Thanks for playing!");
+            overallGameState = false;
+        }
     }
 
 

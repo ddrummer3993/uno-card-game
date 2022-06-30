@@ -27,12 +27,19 @@ public class GameModerator {
     public static boolean overallGameState;
 
 
-    public static void play(Deck deck) {
+    public static void play() {
 
         Scanner scanner = new Scanner(System.in);
 
         overallGameState = true;
         String playAgain;
+
+        //create game deck
+        Deck deck = new Deck();
+
+        //Shuffle the Deck.
+        deck.shuffle();
+        System.out.println("SHUFFLED: " + deck);
 
         //Deal 7 cards to each player, alternating as you deal.
         deal(deck);
@@ -56,20 +63,6 @@ public class GameModerator {
                 GamePlay.playerMove(deck);
             } else {
                 GamePlay.computerMove(deck);
-            }
-        }
-
-        while (overallGameState = false) {
-            if (playerHand.size() == 0) {
-                System.out.println("CONGRATS! You've won the game!");
-                System.out.println("Would you like to play again? (Y/N)");
-                playAgain = scanner.nextLine();
-                if (playAgain.equals("Y")) {
-                    play(deck);
-                } else {
-                    System.out.println("Thanks for playing!");
-                }
-                break;
             }
         }
     }
