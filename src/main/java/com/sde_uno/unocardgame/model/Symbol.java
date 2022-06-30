@@ -13,8 +13,8 @@ public enum Symbol {
     SEVEN("7"),
     EIGHT("8"),
     NINE("9"),
-    DRAWTWO("D2"),
-    SKIP("S"),
+    DRAWTWO("DRAW2"),
+    SKIP("SKIP"),
     WILD("WILD") {
         @Override
         public boolean needsColor() {

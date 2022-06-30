@@ -1,12 +1,11 @@
 package com.sde_uno.unocardgame.controller;
 
-import com.sde_uno.unocardgame.model.Card;
-import com.sde_uno.unocardgame.model.Deck;
-import com.sde_uno.unocardgame.model.GamePlay;
-import com.sde_uno.unocardgame.model.State;
+import com.sde_uno.unocardgame.model.*;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class GameModerator {
 
@@ -25,9 +24,20 @@ public class GameModerator {
     public static boolean overallGameState;
 
 
-    public static void play(Deck deck) {
+    public static void play() {
+
+        Scanner scanner = new Scanner(System.in);
 
         overallGameState = true;
+        String playAgain;
+
+        //create game deck
+        Deck deck = new Deck();
+
+        //Shuffle the Deck.
+        deck.shuffle();
+        System.out.println("SHUFFLED: " + deck);
+
         //Deal 7 cards to each player, alternating as you deal.
         deal(deck);
 
@@ -45,17 +55,13 @@ public class GameModerator {
         }
         System.out.println("THIS PLAYERS TURN: " + playerState);
 
-        while (overallGameState != false) {
+        while (overallGameState) {
             if(playerState == State.PLAYER_ONE_MOVE) {
                 GamePlay.playerMove(deck);
             } else {
                 GamePlay.computerMove(deck);
             }
         }
-
-
-        //TODO determine if need new method for determining player state, and then call play method, or determine player state inside class and then use in method.
-
     }
 
     public static void deal(Deck deck) {
@@ -87,6 +93,10 @@ public class GameModerator {
         System.out.println("Draw Pile: " + deck);
 
         assignPlayableCardState(String.valueOf(playableCard));
+        if (playableCard.contains("WILD")) {
+            int randomNum = (int) ((Math.random() * 4) + 1);
+            playableColorState = String.valueOf(Color.values()[randomNum]);
+        }
         System.out.println("PLAY COLOR: " + playableColorState);
         System.out.println("PLAY SYMBOL: " + playableSymbolState);
     }

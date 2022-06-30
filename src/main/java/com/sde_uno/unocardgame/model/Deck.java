@@ -85,19 +85,20 @@ public class Deck implements Iterable<Card>{
 
     @Override
     public boolean equals(Object obj) {
+    //TODO look @ playing cards to implements equals
         return super.equals(obj);
     }
     //TODO implement equals - refer to playing cards
 
-
     @Override
     public int hashCode() {
+        //TODO look @ playing cards for hashcode
         return super.hashCode();
     }
-    //TODO implement Hashcode - refer to playing cards.
 
     @Override
     public String toString() {
         return cards.toString();
     }
+
 }

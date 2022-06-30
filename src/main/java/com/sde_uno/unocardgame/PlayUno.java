@@ -15,27 +15,21 @@ public class PlayUno {
 
         //Actual Program - Play Uno
 
-        PlayUno unoGame = new PlayUno();
-
         //TODO create testing file and begin to create test methods.
 
-        //Create Deck
-        Deck deck = new Deck();
-        System.out.println("The New Deck of Uno Cards: " + deck);
+        //Create test deck
+        Deck deckTest = new Deck();
+        System.out.println("The New Deck of Uno Cards: " + deckTest);
 
         //Ensure Deck has 100 cards
-        if (deck.getDeckSize() != 100) {
+        if (deckTest.getDeckSize() != 100) {
             System.out.println("Incomplete deck of cards");
         } else {
             System.out.println("The deck has complete number of cards");
         }
 
-        //Shuffle the Deck.
-        deck.shuffle();
-        System.out.println("SHUFFLED: " + deck);
-
         //Begin game via GameModerator
-        GameModerator.play(deck);
+        GameModerator.play();
 
         //TODO determine first player, begin turn.
         GameModerator moderator = new GameModerator();
