@@ -1,29 +1,12 @@
 package com.sde_uno.unocardgame.model;
-
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.NoSuchElementException;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 class DeckTest {
-
-    @Test
-    public void testHashCode() {
-        Deck deck1 = new Deck();
-        Deck deck2 = new Deck();
-        // equal objects must have equal hashcode
-        assertNotEquals(deck1.hashCode(), deck2.hashCode());
-    }
-
     @Test
     void resetDeck() {
-
+        // This doesn't seem like it would work
     }
-
     @Test
     void shuffleDeck() {
         //shuffle deck and compare to see if decks are the same
@@ -32,29 +15,33 @@ class DeckTest {
         deck1.shuffle();
         assertNotEquals(deck1, deck2);
     }
-
     @Test
-    void draw_cardsRemaining() {
-       Deck deck = new Deck();
-    }
-
-
-    @Test
-    void draw_noCardsRemaining() throws NoSuchElementException {
+    void drawCard() {
         Deck deck = new Deck();
-        try {
-            deck.draw();
-            fail("Should throw NoSuchElementException");
-        }
-        catch (NoSuchElementException e) {
-            assertEquals("Deck is empty!", );
-        }
-
+        Card card = deck.draw();
+        assertNotNull(card, "Card not drawn");
     }
 
     @Test
-    public void getDeckSize() {
+    void deckCardHasSymbol() {
+        Deck deck = new Deck();
+        deck.shuffle();
+        Card card = deck.draw();
+        assertNotNull(Symbol.valueOf(card.getSymbol().name()), "Card is missing symbol");
+    }
+    @Test
+    void getRemaining() {
+        Deck deck = new Deck();
+        int remainingBeforeDrawing = deck.getRemaining();
+        deck.draw();
+        int remainingAfterDrawing = deck.getRemaining();
+        assertNotEquals(remainingAfterDrawing, remainingAfterDrawing, "Remaining card count in deck are invalid");
+    }
+    @Test
+    void getDeckSize() {
         Deck deck = new Deck();
         assertEquals(100,deck.getDeckSize());
+        deck.draw();
+        assertEquals(99, deck.getDeckSize(), "Deck size is not updated after drawing!");
     }
 }
